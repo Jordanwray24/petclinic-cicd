@@ -2,7 +2,6 @@ pipeline {
   agent any
 
   environment {
-    JAVA_HOME_11 = "/usr/lib/jvm/java-11-openjdk-amd64"
     TOMCAT_WEBAPPS = "/var/lib/tomcat9/webapps"
     APP_WAR = "petclinic.war"
   }
@@ -12,12 +11,12 @@ pipeline {
       steps { checkout scm }
     }
 
-    stage('Build (Java 11)') {
+    stage('Build (Java 17)') {
       steps {
         sh '''
           set -eux
-          export JAVA_HOME=${JAVA_HOME_11}
-          export PATH=$JAVA_HOME/bin:$PATH
+          export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+          export PATH=$JAVA_HOME/bin:/opt/maven/bin:$PATH
           java -version
           mvn -v
           mvn clean test package
